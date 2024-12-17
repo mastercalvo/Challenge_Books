@@ -64,7 +64,9 @@ public class Libro {
         } else if (Objects.equals(datosLibros.idiomas().get(0), "en")) {
             this.categoria = Idiomas.valueOf("INGLES");
         }
+        this.titulo = datosLibros.titulo();
 
+        this.cantidadDeDescargas = datosLibros.CantidadDeDescargas();
     }
 
     public String getTitulo() {

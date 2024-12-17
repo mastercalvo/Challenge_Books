@@ -13,9 +13,11 @@ public interface SujetoRepository extends JpaRepository<Sujeto, Long> {
     @Query("SELECT a FROM Sujeto a WHERE SIZE(a.libros) > 0")
     List<Sujeto> listarAutoresQueTenganLibrosEscritos();
     @Query("SELECT a FROM Sujeto a WHERE a.fechaDeFallecimiento > :anioIngresado AND :anioIngresado > a.fechaDeNacimiento")
-    List<Sujeto> listaDeAutoresQueEstabanVivosEnUnAnio(int anioIngresado);
+    List<Sujeto> listarAutoresQueEstabanVivosEnUnAnio(int anioIngresado);
     @Query("SELECT a FROM Sujeto a WHERE a.nombre ILIKE %:nombre%")
     Sujeto autorPorNombre(String nombre);
+    @Query("SELECT a FROM Sujeto a WHERE a.nombre ILIKE %:nombre%")
+    Optional<Sujeto> autorPorNombreLista(String nombre);
     @Modifying
     @Transactional
     @Query(value = "ALTER TABLE autores ADD CONSTRAINT nombre_autor_unico UNIQUE (nombre)", nativeQuery = true)
