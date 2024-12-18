@@ -134,20 +134,33 @@ public class Principal {
             System.out.println("error al buscar los datos");
         }
     }
+    private void listarLibrosPorIdiomaIngresado() {
+        System.out.println("Ingrese el idioma de los libros a buscar:");
+        System.out.println("es");
+        System.out.println("en");
+        System.out.println("fr");
+        System.out.println("pt");
 
-    private void listarLibrosPorIdiomaIngresado(){
-        System.out.println("ingrese el idioma de los libros a buscar");
-        var idiomaBuscar =teclado.nextLine();
-        var idiomaBuscarEnum=Idiomas.fromEspañol(idiomaBuscar);
-        var libros =repositorio.findBooksByLanguageWithAuthors(idiomaBuscarEnum);
-        if(libros.isEmpty()){
-            System.out.println("no se encontraron libros de ese idioma");
-            errorMensaje="no se encontraron libros del idioma" + idiomaBuscar;
-        }else{
-            libros.forEach(System.out::println);
-            errorMensaje="libros escritos en " +idiomaBuscar + " encontrados";
+        String idiomaBuscar = teclado.nextLine();
+        if ("es".equalsIgnoreCase(idiomaBuscar) || "en".equalsIgnoreCase(idiomaBuscar) ||
+                "fr".equalsIgnoreCase(idiomaBuscar) || "pt".equalsIgnoreCase(idiomaBuscar)) {
+
+            var idiomaBuscarEnum = Idiomas.fromEspañol(idiomaBuscar);
+            var libros = repositorio.findBooksByLanguageWithAuthors(idiomaBuscarEnum);
+
+            if (libros.isEmpty()) {
+                System.out.println("No se encontraron libros de ese idioma");
+                errorMensaje = "No se encontraron libros del idioma " + idiomaBuscar;
+            } else {
+                libros.forEach(System.out::println);
+                errorMensaje = "Libros escritos en " + idiomaBuscar + " encontrados";
+            }
+        } else {
+            System.out.println("Idioma no reconocido: " + idiomaBuscar);
+            errorMensaje = "Idioma no reconocido: " + idiomaBuscar;
         }
     }
+
 
     private void estadisticasDeLaBaseDeDatos() {
         List<Libro> libros = repositorio.BuscarLibrosConSuAutor();
@@ -256,6 +269,7 @@ public class Principal {
                 case 4:
                     try{
                         listarAutoresDeLaDBVivosEnUnAnioIngresado();
+
                     }catch (NumberFormatException e){
                         errorMensaje="ingresar un valor correcto";
                         System.out.println("ingresar un valor correcto");
